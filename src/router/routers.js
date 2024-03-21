@@ -1,5 +1,5 @@
-// router/routes.js
-import Login from '../pages/Login';
+import Login from '../pages/Login/indexPage.vue';
+import Home from "../pages/Home/indexPage.vue";
 
 
 export default [
@@ -13,11 +13,11 @@ export default [
     //     path: '/register',
     //     component: Register
     // },
-    // {
-    //     name: 'Home',
-    //     path: '/home',
-    //     component: Home
-    // },
+    {
+        name: 'Home',
+        path: '/home',
+        component: Home
+    },
     // {
     //     name: 'Background',
     //     path: '/background',
