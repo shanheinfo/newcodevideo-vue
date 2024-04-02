@@ -7,7 +7,7 @@
             <v-img src="@/assets/logo.png" height="100" contain></v-img>
             <v-divider class="my-4"></v-divider>
             <!-- 选择登录方式 -->
-            <v-select v-model="loginMethod" :items="loginMethods" label="选择登录方式"></v-select>
+            <v-select v-model="loginMethod" :items="loginMethods" label="选择一种注册方式"></v-select>
             <!-- 根据选择的登录方式显示不同的表单 -->
             <template v-if="loginMethod === 'email'">
               <v-form @submit.prevent="loginWithEmail">
@@ -16,7 +16,7 @@
                 <v-btn @click.prevent="sendVerificationCode" color="primary" class="mt-4" block>Send Verification Code</v-btn>
                 <v-btn type="submit" color="primary" class="mt-4" block>Login</v-btn>
               </v-form>
-              <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
+              <p class="caption">已经有账号？ <router-link to="/login">登陆</router-link></p>
             </template>
             <template v-else-if="loginMethod === 'phone'">
               <v-form @submit.prevent="loginWithPhone">
@@ -25,19 +25,19 @@
                 <v-btn @click.prevent="sendVerificationCode" color="primary" class="mt-4" block>Send Verification Code</v-btn>
                 <v-btn type="submit" color="primary" class="mt-4" block>Login</v-btn>
               </v-form>
-              <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
+              <p class="caption">已经有账号？ <router-link to="/login">登陆</router-link></p>
             </template>
             <template v-else-if="loginMethod === 'account'">
               <v-form @submit.prevent="loginWithAccount">
                 <v-text-field v-model="username" label="Username" outlined prepend-inner-icon="mdi-account" required></v-text-field>
                 <v-text-field v-model="password" label="Password" type="password" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
-                <v-btn type="submit" color="primary" class="mt-4" block>登陆</v-btn>
+                <v-btn type="submit" color="primary" class="mt-4" block>注册</v-btn>
               </v-form>
-              <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
+              <p class="caption">已经有账号？ <router-link to="/login">登陆</router-link></p>
             </template>
             <template v-else>
               <!-- 如果没有选择登录方式，则显示注册页面 -->
-              <p class="caption">选择一种登录方式</p>
+              <p class="caption">选择一种注册方式</p>
             </template>
           </v-card-text>
         </v-card>

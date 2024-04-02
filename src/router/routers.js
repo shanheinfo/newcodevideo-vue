@@ -1,6 +1,6 @@
 import Login from '../pages/Login/indexPage.vue';
 import Home from "../pages/Home/indexPage.vue";
-
+import Register from "../pages/Register/indexPage.vue";
 
 export default [
     {
@@ -8,11 +8,11 @@ export default [
         path: '/login',
         component: Login
     },
-    // {
-    //     name: 'Register',
-    //     path: '/register',
-    //     component: Register
-    // },
+    {
+        name: 'Register',
+        path: '/register',
+        component: Register
+    },
     {
         name: 'Home',
         path: '/home',
