@@ -6,9 +6,7 @@
           <v-card-text>
             <v-img src="@/assets/logo.png" height="100" contain></v-img>
             <v-divider class="my-4"></v-divider>
-            <!-- 选择登录方式 -->
             <v-select v-model="loginMethod" :items="loginMethods" label="选择登录方式"></v-select>
-            <!-- 根据选择的登录方式显示不同的表单 -->
             <template v-if="loginMethod === 'email'">
               <v-form @submit.prevent="loginWithEmail">
                 <v-text-field v-model="email" label="邮箱" outlined prepend-inner-icon="mdi-email" required></v-text-field>
@@ -29,8 +27,8 @@
             </template>
             <template v-else-if="loginMethod === 'account'">
               <v-form @submit.prevent="loginWithAccount">
-                <v-text-field v-model="username" label="Username" outlined prepend-inner-icon="mdi-account" required></v-text-field>
-                <v-text-field v-model="password" label="Password" type="password" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
+                <v-text-field v-model="username" label="用户名" outlined prepend-inner-icon="mdi-account" required></v-text-field>
+                <v-text-field v-model="password" label="密码" type="password" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
                 <v-btn type="submit" color="primary" class="mt-4" block>登陆</v-btn>
               </v-form>
               <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
@@ -47,6 +45,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -92,14 +92,28 @@ export default {
     },
     sendVerificationCode() {
       // 发送验证码到邮箱或手机
+      let userInfo;
       if (this.loginMethod === 'email') {
-        // 发送验证码到邮箱
-        console.log('Sending verification code to email:', this.email);
+        userInfo = { userMail: this.email };
       } else if (this.loginMethod === 'phone') {
-        // 发送验证码到手机号
-        console.log('Sending verification code to phone:', this.phone);
+        userInfo = { userPhone: this.phone };
       }
+
+      // 输出发送验证码请求的信息
+      console.log('Sending verification code request:', userInfo);
+
+      // 发送请求到后端获取验证码
+      axios.post('/userLogin/captchaKey', userInfo)
+          .then(response => {
+            console.log('Verification code sent:', response.data);
+            // 可根据后端响应进行相应处理，例如提示用户验证码发送成功
+          })
+          .catch(error => {
+            console.error('Error sending verification code:', error);
+            // 可根据错误进行相应处理，例如提示用户验证码发送失败
+          });
     }
+
     // 添加其他登录方法的处理函数
   }
 }
