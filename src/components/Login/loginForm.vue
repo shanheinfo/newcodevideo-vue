@@ -13,8 +13,8 @@
               <v-form @submit.prevent="loginWithEmail">
                 <v-text-field v-model="email" label="邮箱" outlined prepend-inner-icon="mdi-email" required></v-text-field>
                 <v-text-field v-model="verificationCode" label="验证码" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
-                <v-btn @click.prevent="sendVerificationCode" color="primary" class="mt-4" block>Send Verification Code</v-btn>
-                <v-btn type="submit" color="primary" class="mt-4" block>Login</v-btn>
+                <v-btn @click.prevent="sendVerificationCode" color="primary" class="mt-4" block>点我发送验证码</v-btn>
+                <v-btn type="submit" color="primary" class="mt-4" block>登陆</v-btn>
               </v-form>
               <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
             </template>
@@ -22,8 +22,8 @@
               <v-form @submit.prevent="loginWithPhone">
                 <v-text-field v-model="phone" label="手机号" outlined prepend-inner-icon="mdi-phone" required></v-text-field>
                 <v-text-field v-model="verificationCode" label="验证码" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
-                <v-btn @click.prevent="sendVerificationCode" color="primary" class="mt-4" block>Send Verification Code</v-btn>
-                <v-btn type="submit" color="primary" class="mt-4" block>Login</v-btn>
+                <v-btn @click.prevent="sendVerificationCode" color="primary" class="mt-4" block>点我发送验证码</v-btn>
+                <v-btn type="submit" color="primary" class="mt-4" block>登陆</v-btn>
               </v-form>
               <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
             </template>

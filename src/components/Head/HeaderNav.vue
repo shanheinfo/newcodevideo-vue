@@ -50,8 +50,8 @@ export default {
   },
   methods: {
     redirectToLogin() {
-      if (!this.isLoggedIn()) {
-        this.$router.push('/login'); // 如果未登录，跳转到登录页面
+      if (!this.isLoggedIn() && this.$route.path !== '/login') {
+        this.$router.push('/login'); // 如果未登录且当前不是在登录页面，则跳转到登录页面
       }
     },
     isLoggedIn() {
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style scoped>
-.align-center {
-  margin: auto;
-}
+  .align-center {
+    margin: auto;
+  }
 </style>
