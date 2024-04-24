@@ -10,6 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
       <script src="https://recaptcha.net/recaptcha/api.js?render=6LfTXrYpAAAAAL2vJoTwfCNs8clsBkrDWqJVVJi4"></script>
       <title><%= htmlWebpackPlugin.options.title %></title>
+      <style>
+          /* 尝试使用 CSS Hack 隐藏 reCAPTCHA 隐私验证悬浮窗 */
+          .grecaptcha-badge {
+              visibility: hidden !important;
+              opacity: 0 !important;
+              height: 0 !important;
+              overflow: hidden !important;
+          }
+
+      </style>
   </head>
   <body>
     <noscript>

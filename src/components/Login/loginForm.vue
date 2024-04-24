@@ -12,7 +12,24 @@
               <v-form @submit.prevent="loginWithEmail">
                 <v-text-field v-model="email" label="邮箱" outlined prepend-inner-icon="mdi-email" required></v-text-field>
                 <v-text-field v-model="verificationCode" label="验证码" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
-                <v-btn @click.prevent="triggerCaptcha('email')" color="primary" class="mt-4" block>点我发送验证码</v-btn>
+                <v-btn
+                    v-if="!verificationSent"
+                    @click.prevent="triggerCaptcha('email')"
+                    color="primary"
+                    class="mt-4"
+                    block
+                >
+                  点我发送验证码
+                </v-btn>
+                <v-btn
+                    v-else
+                    color="primary"
+                    class="mt-4"
+                    block
+                    :disabled="true"
+                >
+                  已发送验证码 ({{ countdown }}秒)
+                </v-btn>
                 <v-btn type="submit" color="primary" class="mt-4" block>登录</v-btn>
               </v-form>
               <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
@@ -21,7 +38,25 @@
               <v-form @submit.prevent="loginWithPhone">
                 <v-text-field v-model="phone" label="手机号" outlined prepend-inner-icon="mdi-phone" required></v-text-field>
                 <v-text-field v-model="verificationCode" label="验证码" outlined prepend-inner-icon="mdi-lock" required></v-text-field>
-                <v-btn @click.prevent="triggerCaptcha('phone')" color="primary" class="mt-4" block>点我发送验证码</v-btn>
+                <v-btn
+                    v-if="!verificationSent"
+                    @click.prevent="triggerCaptcha('phone')"
+                    color="primary"
+                    class="mt-4"
+                    block
+                >
+                  点我发送验证码
+                </v-btn>
+                <v-btn
+                    v-else
+                    color="primary"
+                    class="mt-4"
+                    block
+                    :disabled="true"
+                >
+                  已发送验证码 ({{ countdown }}秒)
+                </v-btn>
+
                 <v-btn type="submit" color="primary" class="mt-4" block>登录</v-btn>
               </v-form>
               <p class="caption">没有账号？ <router-link to="/register">注册</router-link></p>
@@ -57,7 +92,10 @@ export default {
       username: '',
       password: '',
       verificationCode: '', // 验证码字段
-      loginMethods: ['email', 'phone', 'account'] // 登录方式列表
+      loginMethods: ['email', 'phone', 'account'], // 登录方式列表
+      verificationSent: false, // 是否已发送验证码
+      countdown: 0, // 倒计时剩余时间（秒）
+      countdownInterval: null // 倒计时计时器
     }
   },
   methods: {
@@ -77,8 +115,7 @@ export default {
       const recaptchaElement = document.getElementById("g-recaptcha");
       console.log(recaptchaElement)
       if (recaptchaElement && recaptchaElement.childNodes.length > 0) {
-        // 如果元素已经包含了 reCAPTCHA，则移除它
-        // recaptchaElement.removeChild(recaptchaElement.childNodes[0]);
+        // 重复按就返回空
         return;
       }
 
@@ -88,6 +125,7 @@ export default {
           callback: (token) => {
             this.verifyRecaptchaToken(token, method);
           },
+          hideBadge: true // 隐藏隐私验证悬浮窗
         });
       });
     },
@@ -115,6 +153,13 @@ export default {
                   userPhone: this.phone
                 });
               }
+
+              // 更新状态为已发送验证码
+              this.verificationSent = true;
+              // 设置倒计时为300秒（5分钟）
+              this.countdown = 300;
+              // 开始倒计时
+              this.startCountdown();
             } else {
               alert('验证失败，请重试'); // 这里需要确保错误处理逻辑被触发
             }
@@ -123,6 +168,16 @@ export default {
             console.error('Error during reCAPTCHA verification:', error);
             alert('验证失败，请重试'); // 这里需要确保错误处理逻辑被触发
           });
+    },
+    startCountdown() {
+      this.countdownInterval = setInterval(() => {
+        if (this.countdown > 0) {
+          this.countdown--; // 倒计时减一秒
+        } else {
+          clearInterval(this.countdownInterval); // 清除倒计时计时器
+          this.verificationSent = false; // 重置验证码发送状态
+        }
+      }, 1000); // 每秒更新一次倒计时
     },
     sendVerificationCode(userInfo) {
       // 实际发送验证码到用户指定的邮箱或手机
