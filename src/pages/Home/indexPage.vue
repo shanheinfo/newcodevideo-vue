@@ -17,7 +17,7 @@ import TopNavigationBar from "@/components/Head/TopNavigationBar.vue";
 import HeaderNav from "@/components/Head/HeaderNav.vue";
 import TopBtn from "@/components/ScrollTop/TopBtn.vue";
 import BannerData from "@/components/Banner/BannerData.vue";
-import IndexPageBox from "@/components/ContentPageBox/indexPageBox.vue";
+import IndexPageBox from "@/components/ContentPageBox/IndexPageBox.vue";
 export default {
   components:{
     HeaderNav,

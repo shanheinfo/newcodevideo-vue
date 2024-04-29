@@ -12,7 +12,7 @@
 <script>
 import HeaderNav from "@/components/Head/HeaderNav.vue";
 import TopNavigationBar from "@/components/Head/TopNavigationBar.vue";
-import LoginForm from "@/components/Login/loginForm.vue";
+import LoginForm from "@/components/Login/LoginForm.vue";
 
 export default {
   components:{
